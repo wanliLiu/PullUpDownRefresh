@@ -28,7 +28,6 @@ public class ListViewMoreActivity extends BaseMoreActivity {
         mAdapter = new ListViewAdapter(this);
         mListView.setAdapter(mAdapter);
 
-
         refreshLayout.setRefreshListener(this);
 
         new Handler().postDelayed(() -> refreshLayout.autoRefresh(), 400);
