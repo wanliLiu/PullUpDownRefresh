@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.soli.pullupdownrefresh.PullRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/test_list_view_frame"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.soli.pullupdownrefresh.view.GridViewWithHeaderAndFooter
+        android:id="@+id/test_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:choiceMode="singleChoice"
+        android:divider="#b0b0b0"
+        android:dividerHeight="0.1dp"
+        android:fadingEdge="none"
+        android:numColumns="2"
+        android:scrollbarStyle="outsideOverlay" />
+
+</com.soli.pullupdownrefresh.PullRefreshLayout>
