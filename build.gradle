@@ -41,5 +41,5 @@ project.ext {
     releaseUserOrg = 'soli'
     releaseGroupId = 'com.soli.refresh'
     releaseVersion = '0.0.1'
-    releaseWebsite = '项目地址'
+    releaseWebsite = 'https://github.com/wanliLiu/PullUpDownRefresh'
 }
