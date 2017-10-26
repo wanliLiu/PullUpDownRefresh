@@ -244,9 +244,11 @@ public class ListLoadMoreAction {
      *
      */
     public void onloadMoreComplete() {
-        mLoadMoreHandler.addFooter();
-        mLoadMoreView.showNomore();
-        isLoadingMore = false;
+        if (isLoadingMore) {
+            mLoadMoreHandler.addFooter();
+            mLoadMoreView.showNomore();
+            isLoadingMore = false;
+        }
     }
 
     /**
