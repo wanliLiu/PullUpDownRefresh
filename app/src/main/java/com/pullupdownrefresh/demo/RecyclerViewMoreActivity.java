@@ -30,7 +30,17 @@ public class RecyclerViewMoreActivity extends BaseMoreActivity {
 
         adapter = new RecyclerAdapter(this);
         mAdapter = new LoadMoreRecyclerAdapter(adapter);
-        mListView.setLayoutManager(new GridLayoutManager(this, 2));
+        mAdapter.setManagerType(LoadMoreRecyclerAdapter.TYPE_MANAGER_GRID);
+        final GridLayoutManager manager = new GridLayoutManager(this,2);
+        manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
+            @Override
+            public int getSpanSize(int position) {
+                if (mAdapter.isHeader(position) || mAdapter.isFooter(position))
+                    return manager.getSpanCount();
+                return 1;
+            }
+        });
+        mListView.setLayoutManager(manager);
         mListView.setAdapter(mAdapter);
 
         refreshLayout.setRefreshListener(this);

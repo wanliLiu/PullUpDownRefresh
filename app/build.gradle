@@ -27,4 +27,6 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':pullupdownrefresh')
+    implementation "com.android.support:appcompat-v7:${supportPackageVersion}"
+    implementation "com.android.support:recyclerview-v7:${supportPackageVersion}"
 }

@@ -41,7 +41,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         return mManagerType;
     }
 
-    public void setmManagerType(int mManagerType) {
+    public void setManagerType(int mManagerType) {
         this.mManagerType = mManagerType;
     }
 
@@ -102,8 +102,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             // create a new framelayout, or inflate from a resource
             FrameLayout frameLayout = new FrameLayout(viewGroup.getContext());
             // make sure it fills the space
-            frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup
-                    .LayoutParams.WRAP_CONTENT));
+            frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
             return new HeaderFooterViewHolder(frameLayout);
         }
     }
@@ -139,9 +138,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         // if it's a staggered grid, span the whole layout
         if (mManagerType == TYPE_MANAGER_STAGGERED_GRID) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams
-                    (ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
             layoutParams.setFullSpan(true);
             vh.itemView.setLayoutParams(layoutParams);
         }
@@ -157,11 +154,11 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     }
 
-    private boolean isHeader(int position) {
+    public boolean isHeader(int position) {
         return (position < mHeaders.size());
     }
 
-    private boolean isFooter(int position) {
+    public boolean isFooter(int position) {
         return (position >= mHeaders.size() + getItemCountHF());
     }
 

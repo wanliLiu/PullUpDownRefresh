@@ -14,7 +14,7 @@ import java.util.List;
 public abstract class BaseMoreActivity extends AppCompatActivity implements PullRefreshLayout.onRefrshListener {
 
     protected int page = 0;
-    protected int pageSize = 20;
+    protected int pageSize = 40;
 
     protected List<String> mData = new ArrayList<String>();
 
