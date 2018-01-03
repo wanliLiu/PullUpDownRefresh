@@ -1,4 +1,13 @@
 # PullUpDownRefresh
+
+## Using PullUpDownRefresh in your application
+
+If you are building with Gradle, simply add the following line to the `dependencies` section of your `build.gradle` file:
+
+```
+implementation 'com.soli.refresh:pull_up_down:0.0.2'
+```
+
 俗话说，前人栽树后人乘凉，我是在[android-Ultra-Pull-To-Refresh](https://github.com/liaohuqiu/android-Ultra-Pull-To-Refresh)下拉基础上，借用[CommonPullToRefresh](https://github.com/Chanven/CommonPullToRefresh)实现的思想，在此基础上，结合自己在实际项目中的经验，总结出来的一个东西。好用，扩展强！
 
 #同时具有下拉刷新和自动预加载
