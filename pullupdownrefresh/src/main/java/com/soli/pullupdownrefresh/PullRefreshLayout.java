@@ -1,8 +1,11 @@
 package com.soli.pullupdownrefresh;
 
 import android.content.Context;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 
 import com.soli.pullupdownrefresh.Header.MaterialHeader;
 import com.soli.pullupdownrefresh.Header.RefreshEyeBlinkHeader;
@@ -30,6 +33,20 @@ public class PullRefreshLayout extends PtrFrameLayout {
      * 上拉监听器, 到了最底部的上拉加载操作
      */
     private onRefrshListener mRefreshListener;
+
+    private boolean isCanPullUp = false;
+    private boolean preventHortinal = true;
+
+    private boolean preventScroll = false;
+
+    private View scrollView = null;
+
+    private float startY;
+    private float startX;
+    // 记录viewPager是否拖拽的标记
+    private boolean mIsHorizontalMove;
+    // 记录事件是否已被分发
+    private int mTouchSlop;
 
     public PullRefreshLayout(Context context) {
         super(context);
@@ -68,7 +85,79 @@ public class PullRefreshLayout extends PtrFrameLayout {
 
         //保证动画能执行的最小时间，从开始加载到完成，增强用户体验，不会一闪消失，这种情况一般是数据加载很快
         setLoadingMinTime(1000);
-        setDurationToCloseHeader(500);
+        setDurationToCloseHeader(800);
+
+        //水平滑动
+//        disableWhenHorizontalMove(true);
+
+
+        final ViewConfiguration configuration = ViewConfiguration.get(getContext());
+        mTouchSlop = ViewConfigurationCompat.getScaledPagingTouchSlop(configuration);
+    }
+
+    /**
+     * @param preventScroll
+     */
+    public void setPreventScroll(boolean preventScroll) {
+        this.preventScroll = preventScroll;
+        if (!preventScroll)
+            resetStatus();
+    }
+
+    /**
+     * 屏蔽水平滑动的数据，相比作者的这个，更管用，因为是先截断的
+     *
+     * @param ev
+     * @return
+     */
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        if (preventScroll) {
+            return dispatchTouchEventSupper(ev);
+        }
+
+        if (!preventHortinal)
+            super.dispatchTouchEvent(ev);
+
+        int action = ev.getAction();
+        switch (action) {
+            case MotionEvent.ACTION_DOWN:
+                // 记录手指按下的位置
+                startY = ev.getY();
+                startX = ev.getX();
+                // 初始化标记
+                mIsHorizontalMove = false;
+                break;
+            case MotionEvent.ACTION_MOVE:
+                // 如果已经判断出是否由横向还是纵向处理，则跳出
+                /**拦截禁止交给Ptr的 dispatchTouchEvent处理**/
+                mIsHorizontalMove = true;
+                // 获取当前手指位置
+                float endY = ev.getY();
+                float endX = ev.getX();
+                float distanceX = Math.abs(endX - startX);
+                float distanceY = Math.abs(endY - startY);
+                if (distanceX != distanceY) {
+                    // 如果X轴位移大于Y轴位移，那么将事件交给父视图处理。
+                    if (distanceX > mTouchSlop && distanceX > distanceY) {
+                        mIsHorizontalMove = true;
+                    } else {
+                        mIsHorizontalMove = false;
+                    }
+                }
+                break;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                //下拉刷新状态时如果滚动了viewpager 此时mIsHorizontalMove为true 会导致PtrFrameLayout无法恢复原位
+                // 初始化标记,
+                mIsHorizontalMove = false;
+                break;
+        }
+        if (mIsHorizontalMove) {
+            return dispatchTouchEventSupper(ev);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
@@ -92,7 +181,16 @@ public class PullRefreshLayout extends PtrFrameLayout {
      * @param pageSize
      */
     public void setPageSize(int pageSize) {
-        getLoadMoreAction().setPageSize(pageSize);
+        if (isCanPullUp)
+            getLoadMoreAction().setPageSize(pageSize);
+    }
+
+    /**
+     * @param loadMore
+     */
+    public void setCanLoadMore(boolean loadMore) {
+        if (isCanPullUp)
+            getLoadMoreAction().setCanLoadMore(loadMore);
     }
 
     /**
@@ -103,8 +201,14 @@ public class PullRefreshLayout extends PtrFrameLayout {
 
         setPtrHandler(new PtrDefaultHandler() {
             @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                return super.checkCanDoRefresh(frame, scrollView != null ? scrollView : content, header);
+            }
+
+            @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                getLoadMoreAction().resetLastItemCount();
+                if (isCanPullUp)
+                    getLoadMoreAction().resetLastItemCount();
                 if (mRefreshListener != null)
                     mRefreshListener.onPullDownRefresh();
             }
@@ -112,16 +216,23 @@ public class PullRefreshLayout extends PtrFrameLayout {
     }
 
     /**
+     *
+     */
+    public void resetLastItemCount() {
+        if (isCanPullUp)
+            getLoadMoreAction().resetLastItemCount();
+    }
+
+    /**
      * 需要自动加载更多
      */
     private void setNeedLoadMoreAction() {
-        View content = getContentView();
-        if (content != null) {
-            getLoadMoreAction().attachToListFor(content, actionFromClick -> {
-                if (mRefreshListener != null)
-                    mRefreshListener.onPullupRefresh(actionFromClick);
-            });
-        }
+        scrollView = getLoadMoreAction().attachToListFor(getContentView(), actionFromClick -> {
+            if (mRefreshListener != null)
+                mRefreshListener.onPullupRefresh(actionFromClick);
+        });
+
+        isCanPullUp = scrollView != null;
     }
 
     @Override
@@ -139,7 +250,17 @@ public class PullRefreshLayout extends PtrFrameLayout {
      */
     public void onRefreshComplete() {
         refreshComplete();
-        getLoadMoreAction().onloadMoreComplete();
+        if (isCanPullUp)
+            getLoadMoreAction().onloadMoreComplete();
+    }
+
+    /**
+     *
+     */
+    public void onLoadMoreErrorHappen() {
+        onRefreshComplete();
+        if (isCanPullUp)
+            getLoadMoreAction().onloadErrorHappen();
     }
 
     /**
@@ -148,6 +269,13 @@ public class PullRefreshLayout extends PtrFrameLayout {
     public void setRefreshListener(onRefrshListener mRefreshListener) {
         this.mRefreshListener = mRefreshListener;
 
+    }
+
+    /**
+     * @param preventHortinal
+     */
+    public void setPreventHortinal(boolean preventHortinal) {
+        this.preventHortinal = preventHortinal;
     }
 
     /**

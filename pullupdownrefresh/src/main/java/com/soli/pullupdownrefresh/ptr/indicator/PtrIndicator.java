@@ -6,6 +6,8 @@ public class PtrIndicator {
 
     public final static int POS_START = 0;
     protected int mOffsetToRefresh = 0;
+    private float dragOfRadioHeight = 1.5f;
+    private int dragMaxDistance = 0;
     private PointF mPtLastMove = new PointF();
     private float mOffsetX;
     private float mOffsetY;
@@ -65,6 +67,7 @@ public class PtrIndicator {
     public void setOffsetToRefresh(int offset) {
         mRatioOfHeaderHeightToRefresh = mHeaderHeight * 1f / offset;
         mOffsetToRefresh = offset;
+
     }
 
     public void onPressDown(float x, float y) {
@@ -125,6 +128,15 @@ public class PtrIndicator {
 
     protected void updateHeight() {
         mOffsetToRefresh = (int) (mRatioOfHeaderHeightToRefresh * mHeaderHeight);
+        dragMaxDistance = (int) (mHeaderHeight * dragOfRadioHeight);
+    }
+
+    public boolean isReachMaxDragDistance() {
+        return getCurrentPosY() >= dragMaxDistance;
+    }
+
+    public int getDragMaxDistance() {
+        return dragMaxDistance;
     }
 
     public void convertFrom(PtrIndicator ptrSlider) {

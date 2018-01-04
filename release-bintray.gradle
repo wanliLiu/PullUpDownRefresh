@@ -1,0 +1,25 @@
+apply plugin: 'com.android.library'
+
+// Set up everything required for releasing on Bintray
+ext {
+    bintrayRepo = 'maven'
+    bintrayUserOrg = 'soli'
+    bintrayName = "${POM_ARTIFACT_ID}"
+    bintrayDescription = POM_DESCRIPTION
+    projectUrl = 'https://github.com/wanliLiu/PullUpDownRefresh'
+    issuesUrl = 'https://github.com/wanliLiu/PullUpDownRefresh'
+    scmUrl = 'https://github.com/wanliLiu/PullUpDownRefresh.git'
+    scmConnection = ''
+    scmDeveloperConnection = ''
+
+    developerId = 'soli'
+    developerName = 'soli'
+
+    projectLicenses = ['Apache-2.0']
+}
+
+// Set up the Android Maven publication (POM etc.)
+apply from: rootProject.file('gradle/android-maven-install.gradle')
+
+// Upload to Bintray
+apply from: rootProject.file('gradle/bintray.gradle')

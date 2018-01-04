@@ -24,7 +24,7 @@ public class PtrFrameLayout extends ViewGroup {
 
     // status enum
     public final static byte PTR_STATUS_INIT = 1;
-    private byte mStatus = PTR_STATUS_INIT;
+    protected byte mStatus = PTR_STATUS_INIT;
     public final static byte PTR_STATUS_PREPARE = 2;
     public final static byte PTR_STATUS_LOADING = 3;
     public final static byte PTR_STATUS_COMPLETE = 4;
@@ -113,7 +113,7 @@ public class PtrFrameLayout extends ViewGroup {
         mScrollChecker = new ScrollChecker();
 
         final ViewConfiguration conf = ViewConfiguration.get(getContext());
-        mPagingTouchSlop = conf.getScaledTouchSlop() * 2;
+        mPagingTouchSlop = conf.getScaledTouchSlop();
     }
 
     @Override
@@ -192,8 +192,7 @@ public class PtrFrameLayout extends ViewGroup {
 
         if (isDebug()) {
             PtrCLog.d(LOG_TAG, "onMeasure frame: width: %s, height: %s, padding: %s %s %s %s",
-                    getMeasuredHeight(), getMeasuredWidth(),
-                    getPaddingLeft(), getPaddingRight(), getPaddingTop(), getPaddingBottom());
+                    getMeasuredWidth(), getMeasuredHeight(), getPaddingLeft(), getPaddingRight(), getPaddingTop(), getPaddingBottom());
 
         }
 
@@ -209,8 +208,7 @@ public class PtrFrameLayout extends ViewGroup {
             if (isDebug()) {
                 MarginLayoutParams lp = (MarginLayoutParams) mContent.getLayoutParams();
                 PtrCLog.d(LOG_TAG, "onMeasure content, width: %s, height: %s, margin: %s %s %s %s",
-                        getMeasuredWidth(), getMeasuredHeight(),
-                        lp.leftMargin, lp.topMargin, lp.rightMargin, lp.bottomMargin);
+                        getMeasuredWidth(), getMeasuredHeight(), lp.leftMargin, lp.topMargin, lp.rightMargin, lp.bottomMargin);
                 PtrCLog.d(LOG_TAG, "onMeasure, currentPos: %s, lastPos: %s, top: %s",
                         mPtrIndicator.getCurrentPosY(), mPtrIndicator.getLastPosY(), mContent.getTop());
             }
@@ -320,10 +318,10 @@ public class PtrFrameLayout extends ViewGroup {
                 float offsetX = mPtrIndicator.getOffsetX();
                 float offsetY = mPtrIndicator.getOffsetY();
 
-                if (mDisableWhenHorizontalMove && !mPreventForHorizontal && (Math.abs(offsetX) > mPagingTouchSlop && Math.abs(offsetX) > Math.abs(offsetY))) {
-                    if (mPtrIndicator.isInStartPosition()) {
-                        mPreventForHorizontal = true;
-                    }
+                if (mDisableWhenHorizontalMove && !mPreventForHorizontal && Math.abs(offsetX) > mPagingTouchSlop && Math.abs(offsetX) > Math.abs(offsetY)) {
+//                    if (mPtrIndicator.isInStartPosition()) {
+                    mPreventForHorizontal = true;
+//                    }
                 }
                 if (mPreventForHorizontal) {
                     return dispatchTouchEventSupper(e);
@@ -375,7 +373,11 @@ public class PtrFrameLayout extends ViewGroup {
             to = PtrIndicator.POS_START;
         }
 
+        if (to >= mPtrIndicator.getDragMaxDistance())
+            to = mPtrIndicator.getDragMaxDistance();
+
         mPtrIndicator.setCurrentPos(to);
+
         int change = to - mPtrIndicator.getLastPosY();
         updatePos(change);
     }
@@ -432,6 +434,8 @@ public class PtrFrameLayout extends ViewGroup {
                     change, mPtrIndicator.getCurrentPosY(), mPtrIndicator.getLastPosY(), mContent.getTop(), mHeaderHeight);
         }
 
+        mHeaderView.setLayerType(change != 0 ? View.LAYER_TYPE_HARDWARE : View.LAYER_TYPE_NONE, null);
+//        ViewCompat.setLayerType(mHeaderView, change != 0 ? View.LAYER_TYPE_HARDWARE : View.LAYER_TYPE_NONE,null);
         mHeaderView.offsetTopAndBottom(change);
         if (!isPinContent()) {
             mContent.offsetTopAndBottom(change);
@@ -549,6 +553,22 @@ public class PtrFrameLayout extends ViewGroup {
         }
         if (mPtrHandler != null) {
             mPtrHandler.onRefreshBegin(this);
+        }
+    }
+
+    /**
+     *
+     */
+    protected void resetStatus() {
+        mPtrIndicator.onRelease();
+        if (mPtrIndicator.hasLeftStartPosition()) {
+            if (DEBUG) {
+                PtrCLog.d(LOG_TAG, "call onRelease when user release");
+            }
+            onRelease(false);
+            if (mPtrIndicator.hasMovedAfterPressedDown()) {
+                sendCancelEvent();
+            }
         }
     }
 
@@ -784,15 +804,6 @@ public class PtrFrameLayout extends ViewGroup {
      */
     public void setLoadingMinTime(int time) {
         mLoadingMinTime = time;
-    }
-
-    /**
-     * Not necessary any longer. Once moved, cancel event will be sent to child.
-     *
-     * @param yes
-     */
-    @Deprecated
-    public void setInterceptEventWhileWorking(boolean yes) {
     }
 
     @SuppressWarnings({"unused"})

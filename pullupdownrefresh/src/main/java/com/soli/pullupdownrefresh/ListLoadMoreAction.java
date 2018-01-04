@@ -5,8 +5,11 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.FrameLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 
 import com.soli.pullupdownrefresh.more.GridViewHandler;
 import com.soli.pullupdownrefresh.more.ILoadMoreViewFactory;
@@ -22,6 +25,9 @@ import com.soli.pullupdownrefresh.view.GridViewWithHeaderAndFooter;
  */
 
 public class ListLoadMoreAction {
+
+    //是否允许加载更多
+    private boolean canLoadMore = true;
 
     private boolean isLoadingMore = false;
     //滑动到倒数第几个的时候就开始加载
@@ -41,13 +47,39 @@ public class ListLoadMoreAction {
 
     /**
      * @param listView
-     * @param mListener
+     * @return
      */
-    public void attachToListFor(View listView, OnLoadMoreListener mListener) {
+    private View getRealListView(View listView) {
 
         if (listView == null) throw new IllegalArgumentException("需要添加的加载更多视图不能为空");
 
-        mContentView = listView;
+        if (listView instanceof AbsListView || listView instanceof RecyclerView)
+            return listView;
+
+        if (listView instanceof ViewGroup &&
+                (listView instanceof FrameLayout || listView instanceof RelativeLayout)) {
+
+            final ViewGroup group = (ViewGroup) listView;
+            for (int i = 0; i < group.getChildCount(); i++) {
+                View view = group.getChildAt(i);
+                if (view instanceof AbsListView || view instanceof RecyclerView) {
+                    return view;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * @param listView
+     * @param mListener
+     */
+    public View attachToListFor(View listView, OnLoadMoreListener mListener) {
+        mContentView = getRealListView(listView);
+
+        if (mContentView == null)
+            return null;
 
         mOnLoadMoreListener = mListener;
 
@@ -73,6 +105,7 @@ public class ListLoadMoreAction {
             mLoadMoreHandler.setRecycleScollListener(mContentView, new recycleViewScroollListener());
         }
 
+        return mContentView;
     }
 
     /**
@@ -91,7 +124,8 @@ public class ListLoadMoreAction {
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
-            processOnMore(recyclerView);
+            if (canLoadMore)
+                processOnMore(recyclerView);
         }
 
         @Override
@@ -203,8 +237,9 @@ public class ListLoadMoreAction {
 
         @Override
         public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-            if (view.getAdapter() != null) {
-                totalItemCount -= (getHeaderViewsCount(view) + getFooterViewsCount(view));
+            if (canLoadMore && view.getAdapter() != null) {
+//                totalItemCount -= (getHeaderViewsCount(view) + getFooterViewsCount(view));
+                totalItemCount -= getFooterViewsCount(view);
                 if (totalItemCount > 0) {
                     int lastVisibleItem = firstVisibleItem + visibleItemCount;
                     if (((totalItemCount - lastVisibleItem) <= ITEM_LEFT_TO_LOAD_MORE ||
@@ -239,13 +274,30 @@ public class ListLoadMoreAction {
         }
     }
 
+    /**
+     * 加载出错出现
+     */
+    public void onloadErrorHappen() {
+        onloadMoreComplete();
+        try {
+            mLoadMoreHandler.addFooter();
+            mLoadMoreView.showNormal();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
 
     /**
      *
      */
     public void onloadMoreComplete() {
         if (isLoadingMore) {
-            mLoadMoreHandler.addFooter();
+            try {
+                mLoadMoreHandler.removeFooter();
+            } catch (Exception e) {
+//                e.printStackTrace();
+            }
             mLoadMoreView.showNomore();
             isLoadingMore = false;
         }
@@ -256,6 +308,15 @@ public class ListLoadMoreAction {
      */
     public void setPageSize(int pageSize) {
         this.pageSize = pageSize;
+        if (this.pageSize >= 10)
+            this.pageSize = 10;
+    }
+
+    /**
+     * @param canLoadMore
+     */
+    public void setCanLoadMore(boolean canLoadMore) {
+        this.canLoadMore = canLoadMore;
     }
 
     /**
@@ -264,7 +325,7 @@ public class ListLoadMoreAction {
     private class loadMoreClickListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            if (!isLoadingMore) {
+            if (canLoadMore && !isLoadingMore) {
                 onloadMoreBegin(true);
             }
         }
