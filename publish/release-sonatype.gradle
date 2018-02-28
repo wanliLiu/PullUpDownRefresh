@@ -64,28 +64,29 @@ afterEvaluate { project ->
                 artifactId POM_ARTIFACT_ID
                 packaging POM_PACKAGING
                 description POM_DESCRIPTION
-                url 'https://github.com/facebook/fresco'
 
-                scm {
-                    url 'https://github.com/facebook/fresco.git'
-                    connection 'scm:git:https://github.com/facebook/fresco.git'
-                    developerConnection 'scm:git:git@github.com:facebook/fresco.git'
-                }
-
-                licenses {
-                    license {
-                        name 'BSD License'
-                        url 'https://github.com/facebook/fresco/blob/master/LICENSE'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'facebook'
-                        name 'Facebook'
-                    }
-                }
+//                url 'https://github.com/facebook/fresco'
+//
+//                scm {
+//                    url 'https://github.com/facebook/fresco.git'
+//                    connection 'scm:git:https://github.com/facebook/fresco.git'
+//                    developerConnection 'scm:git:git@github.com:facebook/fresco.git'
+//                }
+//
+//                licenses {
+//                    license {
+//                        name 'BSD License'
+//                        url 'https://github.com/facebook/fresco/blob/master/LICENSE'
+//                        distribution 'repo'
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id 'facebook'
+//                        name 'Facebook'
+//                    }
+//                }
             }
         }
     }

@@ -6,9 +6,9 @@ ext {
     bintrayUserOrg = 'soli'
     bintrayName = "${POM_ARTIFACT_ID}"
     bintrayDescription = POM_DESCRIPTION
-    projectUrl = 'https://github.com/wanliLiu/PullUpDownRefresh'
-    issuesUrl = 'https://github.com/wanliLiu/PullUpDownRefresh'
-    scmUrl = 'https://github.com/wanliLiu/PullUpDownRefresh.git'
+    projectUrl = 'http://192.168.5.103/liuwanli/musicsdk'
+    issuesUrl = 'http://192.168.5.103/liuwanli/musicsdk'
+    scmUrl = 'http://192.168.5.103/liuwanli/musicsdk.git'
     scmConnection = ''
     scmDeveloperConnection = ''
 
@@ -19,7 +19,7 @@ ext {
 }
 
 // Set up the Android Maven publication (POM etc.)
-apply from: rootProject.file('gradle/android-maven-install.gradle')
+apply from: rootProject.file('publish/android-maven-install.gradle')
 
 // Upload to Bintray
-apply from: rootProject.file('gradle/bintray.gradle')
+apply from: rootProject.file('publish/bintray.gradle')
