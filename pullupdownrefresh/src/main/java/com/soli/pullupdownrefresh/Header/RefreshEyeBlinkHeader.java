@@ -1,6 +1,7 @@
 package com.soli.pullupdownrefresh.Header;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.animation.AlphaAnimation;
@@ -50,8 +51,6 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
      */
     private void init(Context ctx) {
 
-//        setBackgroundColor(Color.WHITE);
-
         animationView = new LottieAnimationView(ctx);
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
@@ -79,7 +78,7 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
 
         if (!animationView.isAnimating()) {
             animationView.loop(true);
-            animationView.setMinAndMaxProgress(0.29986f, 1f);
+            animationView.setMinAndMaxProgress(0.36988f, 1f);
             animationView.playAnimation();
         }
     }
@@ -151,16 +150,20 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
         } else if (currentPos >= mOffsetToRefresh) {
             if (!animationView.isAnimating()) {
                 animationView.loop(true);
-                animationView.setMinAndMaxProgress(0.29986f, 1f);
+                animationView.setMinAndMaxProgress(0.36988f, 1f);
                 animationView.playAnimation();
             }
         }
     }
 
     /**
-     * 动画完成后
+     * 显示加载进度条
      */
-    public interface onAnimiationEndListener {
-        void onAnimationEnd();
+    public void showProgress() {
+        if (!animationView.isAnimating()) {
+            animationView.loop(true);
+            animationView.setMinAndMaxProgress(0.36988f, 1f);
+            animationView.playAnimation();
+        }
     }
 }

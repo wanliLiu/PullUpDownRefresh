@@ -16,7 +16,7 @@ import com.soli.pullupdownrefresh.ptr.PtrUIHandlerHook;
 import com.soli.pullupdownrefresh.ptr.indicator.PtrIndicator;
 
 /**
- *  Material Header
+ * Material Header
  */
 public class MaterialHeader extends View implements PtrUIHandler {
 

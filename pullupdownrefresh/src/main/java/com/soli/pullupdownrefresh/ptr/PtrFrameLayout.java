@@ -271,8 +271,14 @@ public class PtrFrameLayout extends ViewGroup {
         return DEBUG && DEBUG_LAYOUT;
     }
 
-    public boolean dispatchTouchEventSupper(MotionEvent e) {
-        return super.dispatchTouchEvent(e);
+    public boolean dispatchTouchEventSupper(MotionEvent event) {
+        try {
+            return super.dispatchTouchEvent(event);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     @Override

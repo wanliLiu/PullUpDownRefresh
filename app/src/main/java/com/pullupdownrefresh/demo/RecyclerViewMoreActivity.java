@@ -30,7 +30,6 @@ public class RecyclerViewMoreActivity extends BaseMoreActivity {
 
         adapter = new RecyclerAdapter(this);
         mAdapter = new LoadMoreRecyclerAdapter(adapter);
-        mAdapter.setManagerType(LoadMoreRecyclerAdapter.TYPE_MANAGER_GRID);
         final GridLayoutManager manager = new GridLayoutManager(this,2);
         manager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
             @Override

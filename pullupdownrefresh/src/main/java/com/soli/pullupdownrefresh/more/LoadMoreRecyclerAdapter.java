@@ -41,7 +41,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         return mManagerType;
     }
 
-    public void setManagerType(int mManagerType) {
+    public void setmManagerType(int mManagerType) {
         this.mManagerType = mManagerType;
     }
 
@@ -99,7 +99,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
             return vh;
             // else we have a header/footer
         } else {
-            // create a new framelayout, or inflate from a resource
+
             FrameLayout frameLayout = new FrameLayout(viewGroup.getContext());
             // make sure it fills the space
             frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
@@ -138,7 +138,9 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
         // if it's a staggered grid, span the whole layout
         if (mManagerType == TYPE_MANAGER_STAGGERED_GRID) {
-            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams
+                    (ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT);
             layoutParams.setFullSpan(true);
             vh.itemView.setLayoutParams(layoutParams);
         }

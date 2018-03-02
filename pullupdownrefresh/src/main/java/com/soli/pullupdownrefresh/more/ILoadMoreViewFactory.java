@@ -56,7 +56,6 @@ public interface ILoadMoreViewFactory {
         void showLoading();
 
         /**
-         *
          * @param isVisible
          */
         void setFooterVisibility(boolean isVisible);

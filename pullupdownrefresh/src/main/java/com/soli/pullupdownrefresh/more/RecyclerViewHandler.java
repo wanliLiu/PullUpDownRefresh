@@ -28,7 +28,7 @@ public class RecyclerViewHandler implements LoadMoreHandler {
 
                 @Override
                 public View addFootView(int layoutId) {
-                    View view = LayoutInflater.from(context).inflate(layoutId,null);
+                    View view = LayoutInflater.from(context).inflate(layoutId, null);
                     mFooter = view;
 //                    return addFootView(view);
                     return view;

@@ -197,7 +197,7 @@ public class GridViewWithHeaderAndFooter extends GridView {
             fl.setLayoutParams(new LayoutParams(lyp.width, lyp.height));
         }
         if (null != v.getParent()) {
-            ((ViewGroup)v.getParent()).removeView(v);
+            ((ViewGroup) v.getParent()).removeView(v);
         }
         fl.addView(v);
         info.view = v;
