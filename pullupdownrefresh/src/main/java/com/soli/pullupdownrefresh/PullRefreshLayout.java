@@ -207,8 +207,7 @@ public class PullRefreshLayout extends PtrFrameLayout {
 
             @Override
             public void onRefreshBegin(PtrFrameLayout frame) {
-                if (isCanPullUp)
-                    getLoadMoreAction().resetLastItemCount();
+                resetLastItemCount();
                 if (mRefreshListener != null)
                     mRefreshListener.onPullDownRefresh();
             }
