@@ -24,6 +24,8 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     public static final int TYPE_HEADER = 7898;
     public static final int TYPE_FOOTER = 7899;
 
+    private RecyclerView.Adapter<ViewHolder> mAdapter;
+
     private List<View> mHeaders = new ArrayList<View>();
     private List<View> mFooters = new ArrayList<View>();
 
@@ -315,7 +317,6 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         void onItemLongClick(LoadMoreRecyclerAdapter adapter, ViewHolder vh, int position);
     }
 
-    private RecyclerView.Adapter<ViewHolder> mAdapter;
 
     public LoadMoreRecyclerAdapter(RecyclerView.Adapter<ViewHolder> adapter) {
         super();

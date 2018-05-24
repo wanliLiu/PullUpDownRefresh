@@ -15,6 +15,7 @@ public abstract class BaseMoreActivity extends AppCompatActivity implements Pull
 
     protected int page = 0;
     protected int pageSize = 40;
+    protected int duration = 2000;
 
     protected List<String> mData = new ArrayList<String>();
 

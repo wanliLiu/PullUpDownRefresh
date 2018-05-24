@@ -43,7 +43,7 @@ public class PageListView extends BaseMoreActivity {
             mAdapter.setData(mData);
             mAdapter.notifyDataSetChanged();
             loadMoreAction.onloadMoreComplete();
-        }, 100);
+        }, duration);
     }
 
 }

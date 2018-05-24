@@ -52,8 +52,8 @@ public class RecyclerViewMoreActivity extends BaseMoreActivity {
         refreshLayout.postDelayed(() -> {
             setData();
             adapter.setData(mData);
-            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChangedHF();
             refreshLayout.onRefreshComplete();
-        }, 100);
+        }, duration);
     }
 }

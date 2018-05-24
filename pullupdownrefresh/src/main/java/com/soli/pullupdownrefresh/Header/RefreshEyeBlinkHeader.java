@@ -1,7 +1,6 @@
 package com.soli.pullupdownrefresh.Header;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.animation.AlphaAnimation;

@@ -40,7 +40,7 @@ public class ListViewMoreActivity extends BaseMoreActivity {
             mAdapter.setData(mData);
             mAdapter.notifyDataSetChanged();
             refreshLayout.onRefreshComplete();
-        }, 100);
+        }, duration);
     }
 
 }

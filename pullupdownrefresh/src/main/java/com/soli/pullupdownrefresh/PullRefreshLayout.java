@@ -255,7 +255,7 @@ public class PullRefreshLayout extends PtrFrameLayout {
     }
 
     /**
-     *
+     * 加载更多，列表 分页的时候，出错，点击再次加载
      */
     public void onLoadMoreErrorHappen() {
         onRefreshComplete();
