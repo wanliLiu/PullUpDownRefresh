@@ -116,8 +116,10 @@ public class PtrFrameLayout extends ViewGroup {
         mPagingTouchSlop = conf.getScaledTouchSlop();
     }
 
-    @Override
-    protected void onFinishInflate() {
+    /**
+     *
+     */
+    public void tryToGetChild() {
         final int childCount = getChildCount();
         if (childCount > 2) {
             throw new IllegalStateException("PtrFrameLayout can only contains 2 children");
@@ -171,6 +173,11 @@ public class PtrFrameLayout extends ViewGroup {
         if (mHeaderView != null) {
             mHeaderView.bringToFront();
         }
+    }
+
+    @Override
+    protected void onFinishInflate() {
+        tryToGetChild();
         super.onFinishInflate();
     }
 
