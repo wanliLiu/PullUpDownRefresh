@@ -132,7 +132,7 @@ public class PtrFrameLayout extends ViewGroup {
             }
 
             // not specify header or content
-            if (mContent == null || mHeaderView == null) {
+//            if (mContent == null || mHeaderView == null) {
 
                 View child1 = getChildAt(0);
                 View child2 = getChildAt(1);
@@ -157,7 +157,7 @@ public class PtrFrameLayout extends ViewGroup {
                         }
                     }
                 }
-            }
+//            }
         } else if (childCount == 1) {
             mContent = getChildAt(0);
         } else {
