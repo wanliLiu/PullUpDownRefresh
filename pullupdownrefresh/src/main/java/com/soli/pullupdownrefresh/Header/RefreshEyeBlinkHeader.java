@@ -1,10 +1,10 @@
 package com.soli.pullupdownrefresh.Header;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
-import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.FrameLayout;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -91,29 +91,16 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
      */
     public void onRefreshComplete(final PtrFrameLayout ptrLayout) {
         if (ptrLayout.isRefreshing()) {
-            AlphaAnimation animation = new AlphaAnimation(1.0f, 0.0f);
-            animation.setDuration(400);
-            animation.setAnimationListener(new Animation.AnimationListener() {
+            animationView.animate().alpha(0.0f).setDuration(400).setListener(new AnimatorListenerAdapter() {
                 @Override
-                public void onAnimationStart(Animation animation) {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation) {
+                public void onAnimationEnd(Animator animation) {
+                    super.onAnimationEnd(animation);
                     animationView.cancelAnimation();
                     animationView.loop(false);
                     animationView.setVisibility(INVISIBLE);
                     ptrLayout.performRefreshComplete_eyeblink();
                 }
-
-                @Override
-                public void onAnimationRepeat(Animation animation) {
-
-                }
-            });
-            animationView.setAnimation(animation);
-            animation.start();
+            }).start();
         }
     }
 
