@@ -33,7 +33,9 @@ public class PageListView extends BaseMoreActivity {
         mAdapter = new ListViewAdapter(this);
         mListView.setAdapter(mAdapter);
 
-        addData();
+        setData();
+        mAdapter.setData(mData);
+        mAdapter.notifyDataSetChanged();
     }
 
     @Override

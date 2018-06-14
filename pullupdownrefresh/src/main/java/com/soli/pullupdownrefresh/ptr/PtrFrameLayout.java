@@ -502,14 +502,11 @@ public class PtrFrameLayout extends ViewGroup {
 
     public void setRefreshCompleteHook(PtrUIHandlerHook hook) {
         mRefreshCompleteHook = hook;
-        hook.setResumeAction(new Runnable() {
-            @Override
-            public void run() {
-                if (DEBUG) {
-                    PtrCLog.d(LOG_TAG, "mRefreshCompleteHook resume.");
-                }
-                notifyUIRefreshComplete(true);
+        hook.setResumeAction(() -> {
+            if (DEBUG) {
+                PtrCLog.d(LOG_TAG, "mRefreshCompleteHook resume.");
             }
+            notifyUIRefreshComplete(true);
         });
     }
 

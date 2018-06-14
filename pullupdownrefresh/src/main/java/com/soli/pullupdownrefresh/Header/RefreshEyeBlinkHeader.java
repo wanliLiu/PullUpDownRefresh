@@ -98,6 +98,7 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
                     animationView.cancelAnimation();
                     animationView.loop(false);
                     animationView.setVisibility(INVISIBLE);
+                    animationView.setAlpha(1.0f);
                     ptrLayout.performRefreshComplete_eyeblink();
                 }
             }).start();
