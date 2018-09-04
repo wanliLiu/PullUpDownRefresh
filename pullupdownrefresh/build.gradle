@@ -25,8 +25,8 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "com.android.support:appcompat-v7:${supportPackageVersion}"
-    implementation "com.android.support:recyclerview-v7:${supportPackageVersion}"
+    compileOnly "com.android.support:appcompat-v7:${supportPackageVersion}"
+    compileOnly "com.android.support:recyclerview-v7:${supportPackageVersion}"
     //头部动态效果bodaymoiv
     implementation 'com.airbnb.android:lottie:2.2.5'
 //    //下拉刷新
