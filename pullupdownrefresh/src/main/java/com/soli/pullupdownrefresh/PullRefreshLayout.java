@@ -27,7 +27,7 @@ public class PullRefreshLayout extends PtrFrameLayout {
     private MaterialHeader materialHeader;
     private ListLoadMoreAction moreAction;
 
-    private boolean isUseMaterialHeader = true;
+    private boolean isUseMaterialHeader = false;
 
     /**
      * 上拉监听器, 到了最底部的上拉加载操作

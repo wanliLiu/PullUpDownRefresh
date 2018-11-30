@@ -28,7 +28,7 @@ dependencies {
     compileOnly "com.android.support:appcompat-v7:${supportPackageVersion}"
     compileOnly "com.android.support:recyclerview-v7:${supportPackageVersion}"
     //头部动态效果bodaymoiv
-    implementation 'com.airbnb.android:lottie:2.2.5'
+    implementation 'com.airbnb.android:lottie:2.7.0'
 //    //下拉刷新
 //    compile 'in.srain.cube:ultra-ptr:1.0.11'
 }

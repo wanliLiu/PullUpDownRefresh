@@ -54,7 +54,7 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
         LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
         params.topMargin = params.bottomMargin = dip2px(10, ctx);
-        animationView.setAnimation("refresh_eye_blink.json", LottieAnimationView.CacheStrategy.Strong);
+        animationView.setAnimation("refresh_eye_blink.json");
         animationView.setScale(0.55f);
         addView(animationView, params);
     }
