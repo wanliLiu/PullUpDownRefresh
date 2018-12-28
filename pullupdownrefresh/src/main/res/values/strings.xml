@@ -38,4 +38,6 @@
         <item>@color/yellow</item>
         <item>@color/green</item>
     </integer-array>
+
+    <dimen name="loading_height">50dp</dimen>
 </resources>

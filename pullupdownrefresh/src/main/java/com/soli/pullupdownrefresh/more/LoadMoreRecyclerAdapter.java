@@ -11,6 +11,8 @@ import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import com.soli.pullupdownrefresh.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,8 +143,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         // if it's a staggered grid, span the whole layout
         if (mManagerType == TYPE_MANAGER_STAGGERED_GRID) {
             StaggeredGridLayoutManager.LayoutParams layoutParams = new StaggeredGridLayoutManager.LayoutParams
-                    (ViewGroup.LayoutParams.MATCH_PARENT,
-                            ViewGroup.LayoutParams.MATCH_PARENT);
+                    (ViewGroup.LayoutParams.MATCH_PARENT, view.getContext().getResources().getDimensionPixelOffset(R.dimen.loading_height));
             layoutParams.setFullSpan(true);
             vh.itemView.setLayoutParams(layoutParams);
         }
