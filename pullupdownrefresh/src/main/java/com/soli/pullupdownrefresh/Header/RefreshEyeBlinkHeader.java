@@ -55,7 +55,8 @@ public class RefreshEyeBlinkHeader extends FrameLayout implements PtrUIHandler {
         params.gravity = Gravity.CENTER;
         params.topMargin = params.bottomMargin = dip2px(10, ctx);
         animationView.setAnimation("refresh_eye_blink.json");
-        animationView.setScale(0.55f);
+        animationView.setScaleX(0.55f);
+        animationView.setScaleY(0.55f);
         addView(animationView, params);
     }
 

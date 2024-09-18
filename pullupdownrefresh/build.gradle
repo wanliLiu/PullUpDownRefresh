@@ -1,8 +1,8 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion project.ANDROID_COMPILE_SDK_VERSION
-    buildToolsVersion project.ANDROID_BUILD_TOOLS_VERSION
+    namespace "com.soli.pullupdownrefresh"
+    compileSdk project.ANDROID_COMPILE_SDK_VERSION
 
     defaultConfig {
         minSdkVersion project.ANDROID_MIN_SDK_VERSION
@@ -17,22 +17,21 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 }
 
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    compileOnly "com.android.support:appcompat-v7:${supportPackageVersion}"
-    compileOnly "com.android.support:recyclerview-v7:${supportPackageVersion}"
+    implementation("androidx.appcompat:appcompat:1.7.0")
+    implementation("androidx.recyclerview:recyclerview:1.3.2")
     //头部动态效果bodaymoiv
-    implementation 'com.airbnb.android:lottie:2.7.0'
+    implementation 'com.airbnb.android:lottie:5.2.0'
 //    //下拉刷新
 //    compile 'in.srain.cube:ultra-ptr:1.0.11'
 }
 
 
-apply from: rootProject.file('publish/release.gradle')
+//apply from: rootProject.file('publish/release.gradle')
 

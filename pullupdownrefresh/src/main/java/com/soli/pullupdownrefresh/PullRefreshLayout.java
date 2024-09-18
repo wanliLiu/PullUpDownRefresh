@@ -1,18 +1,19 @@
 package com.soli.pullupdownrefresh;
 
+import static com.soli.pullupdownrefresh.ptr.util.PtrLocalDisplay.dp2px;
+
 import android.content.Context;
-import android.support.v4.view.ViewConfigurationCompat;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 
+import androidx.core.view.ViewConfigurationCompat;
+
 import com.soli.pullupdownrefresh.Header.MaterialHeader;
 import com.soli.pullupdownrefresh.Header.RefreshEyeBlinkHeader;
 import com.soli.pullupdownrefresh.ptr.PtrDefaultHandler;
 import com.soli.pullupdownrefresh.ptr.PtrFrameLayout;
-
-import static com.soli.pullupdownrefresh.ptr.util.PtrLocalDisplay.dp2px;
 
 
 /**

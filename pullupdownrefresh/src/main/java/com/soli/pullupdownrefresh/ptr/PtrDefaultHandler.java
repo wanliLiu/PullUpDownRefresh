@@ -1,9 +1,10 @@
 package com.soli.pullupdownrefresh.ptr;
 
 import android.os.Build;
-import android.support.v4.view.ViewCompat;
 import android.view.View;
 import android.widget.AbsListView;
+
+import androidx.core.view.ViewCompat;
 
 public abstract class PtrDefaultHandler implements PtrHandler {
 

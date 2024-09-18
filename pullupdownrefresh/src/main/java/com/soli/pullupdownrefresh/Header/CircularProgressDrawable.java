@@ -1,5 +1,7 @@
 package com.soli.pullupdownrefresh.Header;
 
+import static androidx.annotation.RestrictTo.Scope.LIBRARY_GROUP;
+
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.content.Context;
@@ -14,18 +16,18 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-import android.support.annotation.IntDef;
-import android.support.annotation.NonNull;
-import android.support.annotation.RestrictTo;
-import android.support.v4.view.animation.FastOutSlowInInterpolator;
 import android.util.DisplayMetrics;
 import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 
+import androidx.annotation.IntDef;
+import androidx.annotation.NonNull;
+import androidx.annotation.RestrictTo;
+import androidx.interpolator.view.animation.FastOutSlowInInterpolator;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-import static android.support.annotation.RestrictTo.Scope.LIBRARY_GROUP;
 
 /**
  * @author Soli
@@ -130,7 +132,7 @@ public class CircularProgressDrawable extends Drawable implements Animatable {
      *
      * @param size one of {@link #LARGE} or {@link #DEFAULT}
      */
-    public void setStyle(@android.support.v4.widget.CircularProgressDrawable.ProgressDrawableSize int size) {
+    public void setStyle(@CircularProgressDrawable.ProgressDrawableSize int size) {
         if (size == LARGE) {
             setSizeParameters(CENTER_RADIUS_LARGE, STROKE_WIDTH_LARGE, ARROW_WIDTH_LARGE,
                     ARROW_HEIGHT_LARGE);

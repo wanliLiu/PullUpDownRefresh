@@ -1,15 +1,14 @@
 package com.soli.pullupdownrefresh.more;
 
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.AdapterDataObserver;
-import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLongClickListener;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.soli.pullupdownrefresh.R;
 
@@ -26,7 +25,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     public static final int TYPE_HEADER = 7898;
     public static final int TYPE_FOOTER = 7899;
 
-    private RecyclerView.Adapter<ViewHolder> mAdapter;
+    private RecyclerView.Adapter<RecyclerView.ViewHolder> mAdapter;
 
     private List<View> mHeaders = new ArrayList<View>();
     private List<View> mFooters = new ArrayList<View>();
@@ -99,7 +98,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         // if our position is one of our items (this comes from
         // getItemViewType(int position) below)
         if (type != TYPE_HEADER && type != TYPE_FOOTER) {
-            ViewHolder vh = onCreateViewHolderHF(viewGroup, type);
+            RecyclerView.ViewHolder vh = onCreateViewHolderHF(viewGroup, type);
             return vh;
             // else we have a header/footer
         } else {
@@ -134,7 +133,7 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
         return position - mHeaders.size();
     }
 
-    public void onBindViewHolderHF(ViewHolder vh, int position) {
+    public void onBindViewHolderHF(RecyclerView.ViewHolder vh, int position) {
         mAdapter.onBindViewHolder(vh, position);
     }
 
@@ -264,9 +263,9 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     private OnItemLongClickListener onItemLongClickListener;
 
     private class MyOnClickListener implements OnClickListener {
-        private ViewHolder vh;
+        private RecyclerView.ViewHolder vh;
 
-        public MyOnClickListener(ViewHolder vh) {
+        public MyOnClickListener(RecyclerView.ViewHolder vh) {
             super();
             this.vh = vh;
         }
@@ -282,9 +281,9 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
     }
 
     private class MyOnLongClickListener implements OnLongClickListener {
-        private ViewHolder vh;
+        private RecyclerView.ViewHolder vh;
 
-        public MyOnLongClickListener(ViewHolder vh) {
+        public MyOnLongClickListener(RecyclerView.ViewHolder vh) {
             super();
             this.vh = vh;
         }
@@ -302,30 +301,30 @@ public class LoadMoreRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.V
 
     }
 
-    protected void onItemClick(ViewHolder vh, int position) {
+    protected void onItemClick(RecyclerView.ViewHolder vh, int position) {
 
     }
 
-    protected void onItemLongClick(ViewHolder vh, int position) {
+    protected void onItemLongClick(RecyclerView.ViewHolder vh, int position) {
 
     }
 
     public static interface OnItemClickListener {
-        void onItemClick(LoadMoreRecyclerAdapter adapter, ViewHolder vh, int position);
+        void onItemClick(LoadMoreRecyclerAdapter adapter, RecyclerView.ViewHolder vh, int position);
     }
 
     public static interface OnItemLongClickListener {
-        void onItemLongClick(LoadMoreRecyclerAdapter adapter, ViewHolder vh, int position);
+        void onItemLongClick(LoadMoreRecyclerAdapter adapter, RecyclerView.ViewHolder vh, int position);
     }
 
 
-    public LoadMoreRecyclerAdapter(RecyclerView.Adapter<ViewHolder> adapter) {
+    public LoadMoreRecyclerAdapter(RecyclerView.Adapter<RecyclerView.ViewHolder> adapter) {
         super();
         this.mAdapter = adapter;
         adapter.registerAdapterDataObserver(adapterDataObserver);
     }
 
-    private AdapterDataObserver adapterDataObserver = new AdapterDataObserver() {
+    private RecyclerView.AdapterDataObserver adapterDataObserver = new RecyclerView.AdapterDataObserver() {
         @Override
         public void onChanged() {
             notifyDataSetChanged();

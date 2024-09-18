@@ -1,9 +1,10 @@
 package com.soli.pullupdownrefresh.more;
 
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 public interface LoadMoreHandler {
 

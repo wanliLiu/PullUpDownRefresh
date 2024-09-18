@@ -2,8 +2,9 @@ package com.pullupdownrefresh.demo;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
+
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.soli.pullupdownrefresh.PullRefreshLayout;
 import com.soli.pullupdownrefresh.more.LoadMoreRecyclerAdapter;

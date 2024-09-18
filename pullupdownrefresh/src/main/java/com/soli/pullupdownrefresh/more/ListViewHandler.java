@@ -1,12 +1,13 @@
 package com.soli.pullupdownrefresh.more;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AbsListView.OnScrollListener;
 import android.widget.ListView;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 /**
  *
@@ -15,6 +16,8 @@ public class ListViewHandler implements LoadMoreHandler {
 
     private ListView mListView;
     private View mFooter;
+    private View listView;
+    private RecyclerView.OnScrollListener listener;
 
     @Override
     public void handleSetAdapter(View contentView, ILoadMoreViewFactory.ILoadMoreView loadMoreView, OnClickListener onClickLoadMoreListener) {
@@ -49,7 +52,6 @@ public class ListViewHandler implements LoadMoreHandler {
 
     @Override
     public void setRecycleScollListener(View listView, RecyclerView.OnScrollListener listener) {
-
     }
 
     @Override
